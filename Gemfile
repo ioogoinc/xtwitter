@@ -6,7 +6,7 @@ ruby "3.1.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]generate controller Articles index --skip-routes
 gem "sprockets-rails"
 
 # Use postgresql as the database for Active Record
@@ -63,7 +63,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'rspec-rails', '~> 6.0.0'
-  gem 'shoulda-matchers', '~> 5.0'
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"

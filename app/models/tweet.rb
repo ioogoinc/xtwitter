@@ -9,5 +9,7 @@ class Tweet < ApplicationRecord
   belongs_to :user, class_name: User, foreign_key: :user_id
 
   belongs_to :tweet, class_name: Tweet
-  has_many :retweet, class_name: Tweet
+  has_many :retweets, class_name: Tweet
+
+  has_many :likes, class_name: Like
 end

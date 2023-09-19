@@ -50,6 +50,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_205336) do
     t.bigint "users_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tweets_id"], name: "index_likes_on_tweets_id"
+    t.index ["users_id"], name: "index_likes_on_users_id"
   end
 
   create_table "tweets", force: :cascade do |t|
@@ -59,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_205336) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["users_id"], name: "index_tweets_on_users_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_181544) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_201104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "tweets_id"
+    t.bigint "users_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tweets_id"], name: "index_bookmarks_on_tweets_id"
+    t.index ["users_id"], name: "index_bookmarks_on_users_id"
+  end
 
   create_table "followers", force: :cascade do |t|
     t.integer "follow_id"
@@ -44,15 +53,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_181544) do
     t.boolean "private"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "follow_id_id"
-    t.bigint "follower_id_id"
-    t.index ["follow_id_id"], name: "index_users_on_follow_id_id"
-    t.index ["follower_id_id"], name: "index_users_on_follower_id_id"
   end
 
+  add_foreign_key "bookmarks", "tweets", column: "tweets_id"
+  add_foreign_key "bookmarks", "users", column: "users_id"
+  add_foreign_key "followers", "users", column: "follow_id"
+  add_foreign_key "followers", "users", column: "follower_id"
   add_foreign_key "likes", "tweets", column: "tweets_id"
   add_foreign_key "likes", "users", column: "users_id"
   add_foreign_key "tweets", "users", column: "users_id"
-  add_foreign_key "users", "users", column: "follow_id_id"
-  add_foreign_key "users", "users", column: "follower_id_id"
 end

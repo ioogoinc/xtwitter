@@ -3,7 +3,7 @@ class CreateTweets < ActiveRecord::Migration[7.0]
     create_table :tweets do |t|
       t.references :users, foreign_key: true
       t.integer :other_tweet_id, null: true
-      t.string :type # enum: [retweet, reply, quote, thread]
+      t.string :type
       t.text :body, limit: 480
 
       t.timestamps

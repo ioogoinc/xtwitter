@@ -1,24 +1,31 @@
-# README
+# XWITTER-CLONE
+In this project you will find all implementations requested from different practices
+throughout the training program, as the time goes, the README.md will be updated
+with new instructions for new features.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting started
+First we will need the following requirements.
+- Ruby 3.1.2^
+- PostgreSQL 12.16^
 
-Things you may want to cover:
+Once you met the requirements you need to clone this repository using
 
-* Ruby version
+`git clone`
 
-* System dependencies
+Once the project has been cloned run.
 
-* Configuration
+```
+bundle install
+```
 
-* Database creation
+## Current Stage
+At the moment we will have only migrations, models and its relationships on the database set up as well as in the models logic.
 
-* Database initialization
+To run the migrations you will need to configure your own  `database.yml`  file and then run the following commands.
 
-* How to run the test suite
+```
+rails db:create
+rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This should create you a schema file from which you will be getting information when you do `db:migrate:status`

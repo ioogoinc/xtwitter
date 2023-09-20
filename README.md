@@ -37,6 +37,9 @@ Lets start by explaining the authors table, this table consists of the following
 * The table bookmarks has a column username that references the id column of the table authors to determine which user saved that specific post and a tweet_id that references the tweets table to determine which post was saved by the user
 
 
+* The table tweets has been created in such a way that we dont have to create multiple tables for quote tweets, tweet replies because since those are all a type of tweet it is mor efficient to add a type column in the tweets table to determine later what to do with the 
+
+
 
 
 

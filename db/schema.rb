@@ -10,22 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_173044) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_20_213153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_user_id"
+    t.integer "followee_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "liked_tweet_id"
+    t.integer "liking_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tweets", force: :cascade do |t|
-    t.string "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "author_name"
-    t.index ["author_name"], name: "index_tweets_on_author_name"
-  end
-
-  create_table "tweets_tables", force: :cascade do |t|
-    t.string "body"
+    t.string "tweet_body", limit: 280
+    t.integer "tweeting_user_id"
+    t.integer "reply_at_tweet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username", limit: 20
+    t.string "display_name", limit: 20
+    t.string "email"
+    t.string "password"
+    t.string "bio"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "follows", "users", column: "followee_user_id"
+  add_foreign_key "follows", "users", column: "follower_user_id"
 end

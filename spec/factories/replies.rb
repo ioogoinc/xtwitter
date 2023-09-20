@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :reply do
-    body { Faker::Lorem.characters(number: 255)}
-    user { create(:user) }
-    tweet { create(:tweet) }
+    body { "MyString" }
+    user { nil }
+    tweet { nil }
   end
 end

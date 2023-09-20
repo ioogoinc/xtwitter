@@ -56,12 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_205336) do
 
   create_table "tweets", force: :cascade do |t|
     t.bigint "users_id"
-    t.integer "other_tweet_id"
+    t.bigint "other_tweet_id_id"
+    t.bigint "{:to_table=>:tweets}_id"
     t.string "type"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["other_tweet_id_id"], name: "index_tweets_on_other_tweet_id_id"
     t.index ["users_id"], name: "index_tweets_on_users_id"
+    t.index ["{:to_table=>:tweets}_id"], name: "index_tweets_on_{:to_table=>:tweets}_id"
   end
 
   create_table "users", force: :cascade do |t|

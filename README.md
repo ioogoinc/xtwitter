@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Twitter database model Miguel Lopez 
 
-Things you may want to cover:
+![entity-relations diagram](Xwitter.png)
+* Explanation
 
-* Ruby version
+This database was designed with the following functionalities in mind:
 
-* System dependencies
+* Tweet replies 
+* Bookmark tweets
+* Like twets
+* Quote tweets
+* Retweet a tweet
+* Follow another user (author)
 
-* Configuration
+Let's define a starting point, lets start by explaining the authors table, 
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

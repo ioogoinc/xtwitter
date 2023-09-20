@@ -1,4 +1,3 @@
 class Follower < ApplicationRecord
-  belongs_to :followerID
-  belongs_to :followeeID
+    has_one :author, class_name: Authors, foreign_key: :author_id
 end

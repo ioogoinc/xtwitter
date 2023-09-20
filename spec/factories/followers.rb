@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :follower do
-    followerID { nil }
-    followeeID { nil }
+    id { 1 }
+    followerID { "MyString" }
+    followeeID { "MyString" }
   end
 end

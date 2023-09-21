@@ -1,10 +1,15 @@
 class User < ApplicationRecord
-  has_many :tweets, dependent: :destroy
 
+  # Relación para los tweets creados por el usuario
+  has_many :tweets, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :followers, foreign_key: :follower_id, class_name: 'Follow'
-  has_many :followee, foreign_key: :followee_id, class_name: 'Follow'
+
+  # Relación para los seguidores del usuario
+  has_many :followers, class_name: 'Follow', foreign_key: 'followee_id'
+
+  # Relación para los usuarios que sigue el usuario
+  has_many :followees, class_name: 'Follow', foreign_key: 'follower_id'
   
   #validation for presence and uniqueness for email and username
   validates :email, :username, presence: true, uniqueness: true

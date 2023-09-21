@@ -8,3 +8,4 @@ class CreateTweets < ActiveRecord::Migration[7.0]
     end
   end
 end
+has_one :user class_name: Users, foreign_key: :author_id

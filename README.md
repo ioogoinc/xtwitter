@@ -22,7 +22,7 @@ Problem Context: Adding support for the following features:
   
 Justification for the Model: The definition of the Active Record Models, Migrations, Associations to create a Twitter database model.
 
-# Model Architecture
+# Architecture
 
 ## Diagrams
 

@@ -4,9 +4,11 @@
 
 Explanation of database schema:
 
-This tweeter database es composed by a several entities:
+This tweeter database es composed by several entities:
 
-user which is the main entity can publish many tweets
+user:
+user which is the main entity can publish many tweets.
+One-to-many relationship
 
 tweets are composed by a single user
 
@@ -24,3 +26,5 @@ bookmarks:
 many users can bookmark many tweets
 a user can have many bookmarks
 a tweet can be bookmarked by many people.
+
+Hashtag: 

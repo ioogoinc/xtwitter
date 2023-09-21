@@ -1,3 +1,3 @@
 class Hastag < ApplicationRecord
-    has_and_belongs_to_many :tweets
+    # has_and_belongs_to_many :tweets
 end

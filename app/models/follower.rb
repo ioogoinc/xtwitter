@@ -1,5 +1,8 @@
 class Follower < ApplicationRecord
-    belongs_to :author, class_name: 'Author', foreign_key: :author_id
-    validates_associated :author
-    validates :follower_id, uniqueness: {scope:followee_id}
+    belongs_to :follower, class_name: 'Author'
+    belongs_to :followee, class_name: 'Author' 
+
+    validates_associated :follower
+    validates_associated :followee
+    validates :follower_id, uniqueness: {scope: :followee_id}
 end

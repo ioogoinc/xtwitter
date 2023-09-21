@@ -5,7 +5,8 @@ class Tweet < ApplicationRecord
   validates :body, presence: true, length: {maximum: 255}, if: :not_retweet
   validates :body, presence: false, if: !:not_retweet
   def not_retweet
-    type != "retweet"
+    tweet_type != "retweet"
   end
+  validates_associated :author
 
 end

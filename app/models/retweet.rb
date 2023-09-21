@@ -3,4 +3,5 @@ class Retweet < ApplicationRecord
   belongs_to :retweeted_tweet, class_name: "Tweet"
   validates :retweed_tweet_id, uniqueness: true
   validates :retweeting_user_id, uniqueness: true
+  validates_associated :retweeting_user, :retweeted_tweet
 end

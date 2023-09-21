@@ -8,4 +8,5 @@ class Tweet < ApplicationRecord
     has_many :retweets
     has_many :taggings, foreign_key: "tagged_tweet_id"
     validates :tweet_body, length: {within: (1...255)}, presence: { message: "must be given please" }
+    validates_associated :tweeting_user
 end

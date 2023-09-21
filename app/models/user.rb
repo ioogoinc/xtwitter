@@ -1,12 +1,19 @@
 class User < ApplicationRecord
-  has_many :tweets
-  has_many :bookmarks
-  has_many :likes
-  #has_many :replies
-  has_many :followed_users, foreign_key: :follower, class_name: Follow
-  #check this
-  has_many :followers, through: :followed_users
+  has_many :tweets, dependent: :destroy
 
+
+  # tweet contains bookmarks, also a user can read its bookmarks
+  has_many :bookmarks
+  # tweet contains likes, also a user can see its likes
+  has_many :likes
+
+  #tweet contains replies
+  #has_many :replies
+
+  has_many :followers, foreign_key: :follower_id, class_name: 'Follow'
+
+  has_many :followee, foreign_key: :followee_id, class_name: 'Follow'
+  
   #presence validation for email and username
   validates :username, email, presence: true
   #validates uniqueness for email and username

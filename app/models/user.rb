@@ -27,7 +27,6 @@ class User < ApplicationRecord
 
     # created scopes for finding tweets, tweet & Replies and bookmarks with a user parameter
     scope :followers_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
-
     scope :followings_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
 
     def create_new_hashtags

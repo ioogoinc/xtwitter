@@ -8,4 +8,5 @@ class Follow < ApplicationRecord
 
     validates :follower_id, uniqueness: { scope: :followee_id}
 
+
 end

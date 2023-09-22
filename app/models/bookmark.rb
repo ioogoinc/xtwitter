@@ -11,5 +11,6 @@ class Bookmark < ApplicationRecord
   validates_associated :bookmarked_tweet, :bookmarking_user
 
   scope :bookmarks_by_user, ->(using_user) { where(bookmarking_user_id: using_user)}
+  scope :bookmarks_count, ->(tweet_info)  { where(bookmarked_tweet: tweet_info).count}
 
 end

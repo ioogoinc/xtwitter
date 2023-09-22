@@ -26,6 +26,21 @@ class User < ApplicationRecord
         length: {within: (1...20)}
 
     # created scopes for finding tweets, tweet & Replies and bookmarks with a user parameter
-        
+    scope :followers_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
 
+    scope :followings_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
+
+    def create_new_hashtags
+        hashtags = extract_hashtags_from_body
+        hashtags.each do |hashtag|
+          tagging = Tagging.find_or_create_by(hashtag: hashtag)
+          self.taggings << tagging unless self.taggings.include?(tagging)
+        end
+      end
+    end
+
+      def extract_hashtags_from_body
+        body.scan(/#\w+/).map { |tag| tag.downcase }
+      end
+    end
 end

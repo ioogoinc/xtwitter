@@ -10,4 +10,12 @@ class Retweet < ApplicationRecord
     uniqueness: true
   #created the association validation for the relations between tables user & tweet to retweet
   validates_associated :retweeting_user, :retweeted_tweet
+  
+  
+  scope :retweet_count, ->(tweet_info)  
+  { where(retweeted_tweet: tweet_case).count}
+
+  def retweeting (user_you, tweet_case)
+    Retweet.new retweeting_user_id:user_you, retweed_tweet_id:tweet_case.
+  end
 end

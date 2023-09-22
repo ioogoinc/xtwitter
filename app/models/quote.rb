@@ -8,4 +8,10 @@ class Quote < ApplicationRecord
     presence: { message: "must be given please" }
     #created the association validation for the relations between tables user & tweet to quote
   validates_associated :quoted_tweet, :quoting_user
+
+  scope :quotes_count, ->(tweet_info)  
+  { where(quoted_tweet: tweet_info).count}
+
+  
+
 end

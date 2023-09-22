@@ -13,7 +13,7 @@ class Tweet < ApplicationRecord
 
     validates :body, length: {maximum: 255}
     validates :body, presence: true, if: :tweet_or_quote?
-    
+
 
     def tweet_or_quote?
         retweet_id.nil?
@@ -60,6 +60,43 @@ class Tweet < ApplicationRecord
     end
 
 
+    def like_tweet(user_id)
+        orig_likes = Like.find_by(user_id: user_id )
+
+        if orig_likes
+            return false
+        end
+
+        likes_tweets = Like.new(user_id: user_id, retweet_id: user_id)
+        
+        if likes_tweets.save
+            return true
+        else
+            return false
+        end
+
+    end
+
+    def self.create_hashtag(tweet)
+        tweet_body = tweet.body
+
+        delete_hashtag = tweet_body.scan(/#\w+/).map {|hashtag_text| hashtag_text[1..-1] }
+        
+        
+        delete_hashtag.each do |hash_text|
+
+        hashtag = Hashtag.find_or_create_by(name: hash_text)
+
+        hashtag_new = Hashtag.new(name:hashtag)
+
+        if hashtag_new.nil?
+            return nil
+        else
+            return hashtag_new
+        end
+     
+        end
+    end
 
 
 end

@@ -16,4 +16,9 @@ class Tweet < ApplicationRecord
     
     #validation for the association of the user to tweet
     validates_associated :tweeting_user
+
+    #scope
+    scope :tweets_by_user, ->(using_user) { where(tweeting_user_id: using_user) and (where(reply_at_tweet: nil))}
+    # Ex:- scope :active, -> {where(:active => true)}
+    scope :tweets_replies_by_user, ->(using_user) { where(tweeting_user_id: using_user)}
 end

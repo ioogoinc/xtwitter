@@ -24,4 +24,8 @@ class User < ApplicationRecord
         "Password must contain, At least 1 uppercase letter, at least 1 lowercase letter, at least 1 number and at least 1 special character like !@/*-+_"}
     validates :display_name, 
         length: {within: (1...20)}
+
+    # created scopes for finding tweets, tweet & Replies and bookmarks with a user parameter
+        
+
 end

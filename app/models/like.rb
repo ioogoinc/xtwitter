@@ -9,4 +9,7 @@ class Like < ApplicationRecord
         uniqueness: true
     #created the association validation for the relations between tables user & tweet to like
     validates_associated :liking_user, :liked_tweet
+
+    likes_count(twee_info) = Like.where(liked_tweet: tweet_info).count
+
 end

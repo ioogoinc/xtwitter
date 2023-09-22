@@ -9,4 +9,7 @@ class Bookmark < ApplicationRecord
     uniqueness: true
   #created the association validation for the relations between tables bookmark to tweet and user
   validates_associated :bookmarked_tweet, :bookmarking_user
+
+  scope :bookmarks_by_user, ->(using_user) { where(bookmarking_user_id: using_user)}
+
 end

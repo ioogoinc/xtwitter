@@ -5,6 +5,7 @@ class Tweet < ApplicationRecord
     has_many :replies
     has_many :hashtags
     has_many :bookmarks
+    has_many :likes
 
     validates_associated :user
     validates_associated :retweets
@@ -12,6 +13,7 @@ class Tweet < ApplicationRecord
 
     validates :body, length: {maximum: 255}
     validates :body, presence: true, if: :tweet_or_quote?
+    
 
     def tweet_or_quote?
         retweet_id.nil?
@@ -39,6 +41,25 @@ class Tweet < ApplicationRecord
             return nil
         end
     end
+
+    def self.create_quote_retweet(user_id, body) 
+
+        orig_tweet = Tweet.find_by(retweet_id:nil, user_id: user_id )
+
+        if orig_tweet.nil?
+            return nil
+        end
+
+        retweet_body= Tweet.new(user_id: user_id, retweet_id: orig_tweet.id, body:body)
+
+        if retweet_body.save
+            return retweet_body
+        else
+            return nil
+        end
+    end
+
+
 
 
 end

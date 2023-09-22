@@ -1,10 +1,10 @@
 class User < ApplicationRecord
     has_many :followees, foreign_key: :follower_id, class_name: 'Follow'
-
     has_many :followers,foreign_key: :followee_id, class_name: 'Follow'
     has_many :tweets
     has_many :replies
     has_many :bookmarks
+    has_many :likes
     has_many :retweets, foreign_key: :retweet_id, class_name: 'Tweet'
     has_many :quotes, foreign_key: :quote_id, class_name: 'Tweet'
 
@@ -14,6 +14,7 @@ class User < ApplicationRecord
         presence: true, 
         length: {minimum: 12}, 
         format: { with: /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])/ }
+        
 
     scope :followers_count_by_user, -> (user_id) { where(id: user_id).joins(:followers).count }
 

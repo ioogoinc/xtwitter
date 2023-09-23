@@ -2,7 +2,6 @@ class User < ApplicationRecord
     has_many :followee_user, foreign_key: :follower_user_id, class_name: 'Follow'
     has_many :follower_user, foreign_key: :followee_user_id, class_name: 'Follow'  
     has_and_belongs_to_many :Tweet, join_table: "table_name", foreign_key: "Tweet_id"
-    
     has_many :tweets, foreign_key: "tweeting_user_id"
     has_many :likes, foreign_key: "liking_user_id"
     has_many :bookmarks, foreign_key: "bookmarking_user_id"
@@ -26,20 +25,12 @@ class User < ApplicationRecord
         length: {within: (1...20)}
 
     # created scopes for finding tweets, tweet & Replies and bookmarks with a user parameter
-    scope :followers_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
-    scope :followings_count, ->(tweet_info) { where(retweeted_tweet: tweet_info).count}
+    scope :followers_count, ->(self.id) { where(followee_user: self.id).count}
+    scope :followings_count, ->(self.id) { where(follower_user: self.id).count}
+    scope :likes_by_user, ->(self.id) { where(liking_user_id: self.id)}    
+    scope :bookmarks_by_user, ->(self.id) { where(bookmarking_user_id: self.id)}
+    scope :retweets_by_user, ->(self.id) { where(retweeting_user_id:self.id)}
+    scope :tweets_by_user, ->(self.id) { where(tweeting_user_id: self.id) and (where(reply_at_tweet: nil))}
+    scope :tweets_replies_by_user, ->(self.id) { where(tweeting_user_id: self.id)}
 
-    def create_new_hashtags
-        hashtags = extract_hashtags_from_body
-        hashtags.each do |hashtag|
-          tagging = Tagging.find_or_create_by(hashtag: hashtag)
-          self.taggings << tagging unless self.taggings.include?(tagging)
-        end
-      end
-    end
-
-      def extract_hashtags_from_body
-        body.scan(/#\w+/).map { |tag| tag.downcase }
-      end
-    end
 end

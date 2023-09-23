@@ -1,4 +1,5 @@
 class Tweet < ApplicationRecord
+#----------------------------------------------------------------------------------------------------------
     belongs_to :original_tweet, class_name: "Tweet", optional: true, foreign_key: "reply_at_tweet_id"
     belongs_to :tweeting_user, class_name: "User"
     belongs_to :reply_at_tweet, class_name: "Tweet", optional: true
@@ -8,18 +9,48 @@ class Tweet < ApplicationRecord
     has_many :retweets
     has_many :taggings, foreign_key: "tagged_tweet_id"
     
-    
+#----------------------------------------------------------------------------------------------------------
+   
     #validation fo the tweet limit of characters
     validates :tweet_body, 
         length: {within: (1...255)}, 
         presence: { message: "must be given please" }
     
-    
-        #validation for the association of the user to tweet
+    #validation for the association of the user to tweet
     validates_associated :tweeting_user
 
+#----------------------------------------------------------------------------------------------------------
 
-    #scope
-    scope :tweets_by_user, ->(using_user) { where(tweeting_user_id: using_user) and (where(reply_at_tweet: nil))}
-    scope :tweets_replies_by_user, ->(using_user) { where(tweeting_user_id: using_user)}
+    #scopes
+    scope :retweet_count, ->(id) { where(retweeted_tweet: id).count }
+    scope :bookmarks_count, ->(id)  { where(bookmarked_tweet: id).count }
+    scope :quotes_count, ->(id) { where(quoted_tweet: id).count }
+    scope :likes_count, ->(id)  { where(liked_tweet: id).count }
+
+#----------------------------------------------------------------------------------------------------------
+    #created method to create new hashtag id in tagging table if a registry doesn't exist
+
+    #this is the method that allows the extracting of the hashtags so the create new hashtag method can check if the hashtag neww creating or not
+    def extract_hashtags_from_body
+    	self.tweet_body.scan(/#\w+/).map { |tag| tag.downcase }
+    end
+
+#----------------------------------------------------------------------------------------------------------
+
+    #Method that allows liking the tweet
+    def liking (user_you)
+        Like.new liking_user_id:user_you, liked_tweet_id: self.id
+    end
+    #Method that allows bookmarking the tweet
+    def bookmarking (user_you)
+        Bookmark.new bookmarking_user_id:user_you, bookmarked_tweet_id:self.id
+    end
+    #Method that allows retweeting the tweet
+    def retweeting (user_you)
+        Retweet.new retweeting_user_id:user_you, retweeted_tweet_id: self.id
+    end
+    #Method that allows quoting the tweet
+    def quoting (user_you, quote_text)
+        Quote.new quoting_user_id:user_you, quoted_tweet_id: self.id, quote_body:quote_text 
+    end
 end

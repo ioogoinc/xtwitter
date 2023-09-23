@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Follow.create(follower_user_id:2, followee_user_id:1)
+#Follow.create(follower_user_id:2, followee_user_id:1)
 
 #users
 User.create(username: "pepitos", display_name:"yanix", email: "yanira@gmail.com" ,password: "abcDEF123456789!" ,bio:"" ,location:"")
@@ -36,6 +36,8 @@ Tweet.create(tweet_body: "pepitos2", tweeting_user_id: 3, reply_at_tweet_id: nil
 Tweet.create(tweet_body: "pepitos3", tweeting_user_id: 3, reply_at_tweet_id: nil)
 Tweet.create(tweet_body: "pepitos5", tweeting_user_id: 3, reply_at_tweet_id: nil)
 Tweet.create(tweet_body: "pepitos4", tweeting_user_id: 3, reply_at_tweet_id: nil)
+
+Tweet.create(tweet_body: "prueba #htaaafg", tweeting_user_id: 3, reply_at_tweet_id: nil)
 
 #replies
 

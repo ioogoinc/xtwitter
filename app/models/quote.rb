@@ -11,12 +11,4 @@ class Quote < ApplicationRecord
 
   #created the association validation for the relations between tables user & tweet to quote
   validates_associated :quoted_tweet, :quoting_user
-
-
-  scope :quotes_count, ->(tweet_info) { where(quoted_tweet: tweet_info).count}
-
-
-  def quoting (user_you, tweet_case, quote_text)
-    Quote.new quoting_user_id:user_you, quoted_tweet_id:tweet_case, quote_body:quote_text 
-  end
 end

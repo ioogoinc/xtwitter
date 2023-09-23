@@ -22,17 +22,27 @@ class Tweet < ApplicationRecord
 #----------------------------------------------------------------------------------------------------------
 
     #scopes
-    scope :retweet_count, ->(id) { where(retweeted_tweet: id).count }
-    scope :bookmarks_count, ->(id)  { where(bookmarked_tweet: id).count }
-    scope :quotes_count, ->(id) { where(quoted_tweet: id).count }
-    scope :likes_count, ->(id)  { where(liked_tweet: id).count }
+    scope :retweet_count, -> (id) { joins("INNER JOIN retweets ON retweets.retweed_tweet_id = tweets.id").group("retweets.retweed_tweet_id").having("retweets.retweed_tweet_id": id).count}
+    scope :bookmarks_count, -> (id)  { where(bookmarked_tweet: id).count }
+    scope :quotes_count, -> (id) { where(quoted_tweet: id).count }
+    scope :likes_count, -> (id)  { where(liked_tweet: id).count }
 
 #----------------------------------------------------------------------------------------------------------
     #created method to create new hashtag id in tagging table if a registry doesn't exist
+    
+    #def create_new_hashtags
+    #    hashtags = extract_hashtags_from_body
+    #    hashtags.each do |hashtag|
+    #      tagging = Tagging.find_or_create_by(hashtag: hashtag)
+    #      self.taggings << tagging 
+    #        unless self.taggings.include?(tagging)
+    #        end
+    #    end
+    #end
 
     #this is the method that allows the extracting of the hashtags so the create new hashtag method can check if the hashtag neww creating or not
     def extract_hashtags_from_body
-    	self.tweet_body.scan(/#\w+/).map { |tag| tag.downcase }
+    	self.tweet_body.scan(/#\w+/).map { |tag| tag.downcase}
     end
 
 #----------------------------------------------------------------------------------------------------------
@@ -47,7 +57,7 @@ class Tweet < ApplicationRecord
     end
     #Method that allows retweeting the tweet
     def retweeting (user_you)
-        Retweet.new retweeting_user_id:user_you, retweeted_tweet_id: self.id
+        Retweet.new retweeting_user_id:user_you, retweed_tweet_id: self.id
     end
     #Method that allows quoting the tweet
     def quoting (user_you, quote_text)

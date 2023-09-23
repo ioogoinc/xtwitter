@@ -8,6 +8,8 @@ class User < ApplicationRecord
     has_many :quotes, foreign_key: "quoting_user_id"
     has_many :retweets, foreign_key: "retweeting_user_id"
 
+#----------------------------------------------------------------------------------------------------------
+
     #created the validation for user always having a username not more long that 20 characters, having an email and having a password that meets security validation of At least 1 uppercase letter, at least 1 lowercase letter, at least 1 number and at least 1 special character like !@/*-+_" 
     validates :username,
         uniqueness: true, 
@@ -24,13 +26,15 @@ class User < ApplicationRecord
     validates :display_name, 
         length: {within: (1...20)}
 
+ #----------------------------------------------------------------------------------------------------------
+        
     # created scopes for finding tweets, tweet & Replies and bookmarks with a user parameter
-    scope :followers_count, ->(self.id) { where(followee_user: self.id).count}
-    scope :followings_count, ->(self.id) { where(follower_user: self.id).count}
-    scope :likes_by_user, ->(self.id) { where(liking_user_id: self.id)}    
-    scope :bookmarks_by_user, ->(self.id) { where(bookmarking_user_id: self.id)}
-    scope :retweets_by_user, ->(self.id) { where(retweeting_user_id:self.id)}
-    scope :tweets_by_user, ->(self.id) { where(tweeting_user_id: self.id) and (where(reply_at_tweet: nil))}
-    scope :tweets_replies_by_user, ->(self.id) { where(tweeting_user_id: self.id)}
+    scope :followers_count, ->(id) { where(followee_user: id).count}
+    scope :followings_count, ->(id) { where(follower_user: id).count}
+    scope :likes_by_user, ->(id) { where(liking_user_id: id)}    
+    scope :bookmarks_by_user, ->(id) { where(bookmarking_user_id: id)}
+    scope :retweets_by_user, ->(id) { where(retweeting_user_id: id)}
+    scope :tweets_by_user, ->(id) { where(tweeting_user_id: id) and (where(reply_at_tweet: nil))}
+    scope :tweets_replies_by_user, ->(id) { where(tweeting_user_id: id)}
 
 end

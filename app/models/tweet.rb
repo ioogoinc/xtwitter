@@ -43,8 +43,8 @@ class Tweet < ApplicationRecord
     #created method to create new tagging record for each hashtag, and a  hashtag id in tagging table if a registry doesn't exist
 
     def create_new_hashtags
-          hashtags = extract_hashtags_from_body
-          hashtags.each do |hashtag|
+        hashtags = extract_hashtags_from_body
+        hashtags.each do |hashtag|
             existing_hashtag = Hashtag.find_by(hashtag_body: hashtag.downcase)
 
             if existing_hashtag

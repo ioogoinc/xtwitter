@@ -8,33 +8,46 @@ class Tweet < ApplicationRecord
     has_many :quotes
     has_many :retweets
     has_many :taggings, foreign_key: "tagged_tweet_id"
-    
+
 #----------------------------------------------------------------------------------------------------------
-   
+
     #validation fo the tweet limit of characters
-    validates :tweet_body, 
-        length: {within: (1...255)}, 
+    validates :tweet_body,
+        length: {within: (1...255)},
         presence: { message: "must be given please" }
-    
+
     #validation for the association of the user to tweet
     validates_associated :tweeting_user
 
 #----------------------------------------------------------------------------------------------------------
 
     #scopes
-    scope :retweet_count, -> (id) { joins("INNER JOIN retweets ON retweets.retweed_tweet_id = tweets.id").group("retweets.retweed_tweet_id").having("retweets.retweed_tweet_id": id).count}
-    scope :bookmarks_count, -> (id)  { where(bookmarked_tweet: id).count }
-    scope :quotes_count, -> (id) { where(quoted_tweet: id).count }
-    scope :likes_count, -> (id)  { where(liked_tweet: id).count }
+    scope :retweet_count, -> (id) {
+        joins("INNER JOIN retweets ON retweets.retweed_tweet_id = tweets.id")
+        .group("retweets.retweed_tweet_id")
+        .having("retweets.retweed_tweet_id": id).count}
+    scope :bookmarks_count, -> (id)  {
+        joins("INNER JOIN bookmarks ON bookmarks.bookmarked_tweet_id = tweets.id")
+        .group("bookmarks.bookmarked_tweet_id")
+        .having("bookmarks.bookmarked_tweet_id": id).count}
+    scope :quotes_count, -> (id) {
+        joins("INNER JOIN quotes ON quotes.quoted_tweet_id = tweets.id")
+        .group("quotes.quoted_tweet_id")
+        .having("quotes.quoted_tweet_id": id).count}
+    scope :likes_count, -> (id)  {
+        joins("INNER JOIN likes ON likes.liked_tweet_id = tweets.id")
+        .group("likes.liked_tweet_id")
+        .having("likes.liked_tweet_id": id).count}
 
 #----------------------------------------------------------------------------------------------------------
     #created method to create new hashtag id in tagging table if a registry doesn't exist
-    
+
     #def create_new_hashtags
     #    hashtags = extract_hashtags_from_body
+    #
     #    hashtags.each do |hashtag|
     #      tagging = Tagging.find_or_create_by(hashtag: hashtag)
-    #      self.taggings << tagging 
+    #      self.taggings << tagging
     #        unless self.taggings.include?(tagging)
     #        end
     #    end
@@ -61,6 +74,6 @@ class Tweet < ApplicationRecord
     end
     #Method that allows quoting the tweet
     def quoting (user_you, quote_text)
-        Quote.new quoting_user_id:user_you, quoted_tweet_id: self.id, quote_body:quote_text 
+        Quote.new quoting_user_id:user_you, quoted_tweet_id: self.id, quote_body:quote_text
     end
 end

@@ -96,4 +96,6 @@ Interactions:
 * Users can reply to tweets, which is recorded in the Replies table.
 * Tweets can contain hashtags, which are recorded in the Hashtags table, and the relationship between tweets and hashtags is recorded in the Hashtags_tweets table.
 
+
+
 ![Xtwitter_Project](https://github.com/MelissaPleitez/Info/assets/92410851/97807db1-8c7b-4e72-9271-329eebf44655)

@@ -66,10 +66,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_131806) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "retweet_id_id"
-    t.bigint "quote_id_id"
-    t.index ["quote_id_id"], name: "index_tweets_on_quote_id_id"
-    t.index ["retweet_id_id"], name: "index_tweets_on_retweet_id_id"
+    t.bigint "retweet_id"
+    t.bigint "quote_id"
+    t.index ["quote_id"], name: "index_tweets_on_quote_id"
+    t.index ["retweet_id"], name: "index_tweets_on_retweet_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 

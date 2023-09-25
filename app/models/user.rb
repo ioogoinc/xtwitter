@@ -5,8 +5,8 @@ class User < ApplicationRecord
     has_many :replies
     has_many :bookmarks
     has_many :likes
-    has_many :retweets, foreign_key: :retweet_id, class_name: 'Tweet'
-    has_many :quotes, foreign_key: :quote_id, class_name: 'Tweet'
+    # has_many :retweets, foreign_key: :retweet_id, class_name: 'Tweet'
+    # has_many :quotes, foreign_key: :quote_id, class_name: 'Tweet'
 
     validates :email, :username, presence: true, 
         uniqueness: true

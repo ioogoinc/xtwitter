@@ -61,7 +61,6 @@ class Tweet < ApplicationRecord
             end
 
             self.taggings << tagging unless self.taggings.include?(tagging)
-            end
         end
     end
 
@@ -88,4 +87,5 @@ class Tweet < ApplicationRecord
     def quoting (user_you, quote_text)
         Quote.new quoting_user_id:user_you, quoted_tweet_id: self.id, quote_body:quote_text
     end
+
 end

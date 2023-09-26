@@ -8,6 +8,7 @@ RSpec.describe Like, type: :model do
   end
 
   context "validations" do
-    it { should validate_uniqueness_of(:user_id).scoped_to(:tweet_id) }
+      subject (:like) { FactoryBot.build(:like) }
+      it { should validate_uniqueness_of(:user_id).scoped_to(:tweet_id) }
   end
 end

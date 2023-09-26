@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
     validates :email, :username, presence: true, 
         uniqueness: true
+        
     validates :password,
         presence: true, 
         length: {minimum: 12}, 
@@ -19,18 +20,4 @@ class User < ApplicationRecord
     scope :followers_count_by_user, -> (user_id) { where(id: user_id).joins(:followers).count }
 
     scope :following_count_by_user, -> (user_id) { where(id: user_id).joins(:followees).count }
-
-
-    scope :retweets_count, ->  (tweet_id) do
-        joins(:retweets).where('tweets.retweet_id = ?', tweet_id).count
-    end
-
-    scope :quotes_count, ->  (tweet_id) do
-        joins(:quotes).where('tweets.quote_id = ?', tweet_id).count
-    end
-
-    scope :bookmarks_tweet_by_user, ->  (user_id) do
-        joins(:bookmarks).where(users: {id: user_id})
-    end
-
 end

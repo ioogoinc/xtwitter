@@ -3,4 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  # CREATE Tweets
+  resources :tweets, only: [:new, :create]
+   # UPDATE Tweets
+  resources :tweets, only: [:edit, :update]
+ 
 end

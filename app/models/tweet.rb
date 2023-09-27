@@ -4,10 +4,11 @@ class Tweet < ApplicationRecord
     has_many :retweets, class_name: 'Tweet', foreign_key: :retweet_id
     has_many :quotes, class_name: 'Tweet', foreign_key: :quote_id
     has_many :replies, class_name: 'Tweet', foreign_key: :parent_tweet_id
+    has_many :hashtag_tweets
     has_many :hashtags, through: :hashtag_tweets, inverse_of: :tweets
     has_many :bookmarks
     has_many :likes
-    has_many :hashtag_tweets
+   
 
 
     validates_associated :user
@@ -52,16 +53,22 @@ class Tweet < ApplicationRecord
         quote
     end
 
-
-     def self.create_like(user) 
-        retweet = Tweet.new(
-          body: nil,
-          user_id: user,
-          retweet_id: tweet_to_retweet,    
-        )
-    
-        retweet.save!
-        retweet
+    def self.create_like(user, tweet)
+      like = Like.new(
+        tweet_id: tweet,
+        user_id: user
+      )
+  
+      like.save!
+      like
+    end
+  
+    def self.create_hashtags(tweet)
+      hashtags = tweet.body.scan(/#\w+/)
+      hashtags.each do |hashtag_words| 
+        hashtag = Hashtag.find_or_create_by(name: hashtag_words)
+        tweet.hashtags << hashtag unless tweet.hashtags.include?(hashtag)
+      end
     end
 
     

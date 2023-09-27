@@ -68,26 +68,33 @@ RSpec.describe Tweet, type: :model do
     
         end 
 
-        # it "creates a new retweet" do
-        #     user = create(:user)
-        #     tweet_to_retweet = create(:tweet)
-        #     retweet = Tweet.create_retweet(user, tweet_to_retweet)
-        #     expect(retweet).to be_a(Tweet)
-        #     expect(retweet.body).to be_nil
-        #     expect(retweet.user_id).to eq(user.id)
-        #     expect(retweet.retweet_id).to eq(tweet_to_retweet.id)
+        it "encapsulates the create retweet logic" do
+            user = create(:user)
+            retweets_new = create(:tweet)
+            retweet = Tweet.create_retweet(user.id, retweets_new.id)
+            expect(retweet).to be_a(Tweet)
+            expect(retweet.body).to be_nil
+            expect(retweet.user_id).to eq(user.id)
+            expect(retweet.retweet_id).to eq(retweets_new.id)
       
-        # end
+        end
+        
+        it "encapsulates the like logic" do 
+            user = create(:user)
+            tweet = create(:tweet)
+            like = Tweet.create_like(user.id, tweet.id)
+            expect(like).to be_a(Like)
+            expect(like.user_id).to eq(user.id)
+            expect(like.tweet_id).to eq(tweet.id)
+        end
 
-        # it "creates a new quote" do 
-        #     user = create(:user)
-        #     new_body = 'Quote body'
-        #     quote = Tweet.create_quote(user, new_body)
-        #     expect(quote).to be_a(Tweet)
-        #     expect(quote.body).to eq(new_body)
-        #     expect(quote.user_id).to eq(user.id)
-        #     expect(quote.quote_id).to eq(quote.id)      
-        # end
+        it "encapsulates the hashtag logic" do 
+            tweet = create(:tweet, body:"This is a tweet #happy #FeelingGood")
+            Tweet.create_hashtags(tweet)
+            hashtags = tweet.hashtags
+
+            expect(hashtags.count).to eq(2)
+        end
         
     end
 end

@@ -30,6 +30,30 @@ Rails.application.routes.draw do
     end
   end
 
+  # QUOTE A TWEET
+  resources :tweets do
+    member do
+      post 'quote'
+    end
+  end
+
+  # REPLY A TWEET
+
+  resources :tweets do
+    member do
+      get 'reply'
+    end
+  end
+
+  # BOOKMARK A TWEET
+
+  resources :tweets do
+    member do
+      post 'bookmark'
+    end
+  end
+
+  
 
 end
 

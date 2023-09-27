@@ -28,5 +28,17 @@ RSpec.describe "Tweets", type: :routing do
     it "Route to /tweets/:id/retweet using POST to TweetsController" do
       expect(post:'/tweets/:id/retweet').to route_to('tweets#retweet')
     end
+
+    it "Route to /tweets/:id/quote using POST to TweetsController" do
+      expect(post:'/tweets/:id/quote').to route_to('tweets#quote')
+    end
+
+    it "Route to /tweets/:id/reply using GET to TweetsController" do
+      expect(get:'/tweets/:id/reply').to route_to('tweets#reply')
+    end
+
+    it "Route to /tweets/:id/bookmark using GOT to TweetsController" do
+      expect(post:'/tweets/:id/bookmark').to route_to('tweets#bookmark')
+    end
   end
 end

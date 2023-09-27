@@ -29,28 +29,30 @@ RSpec.describe User, type: :model do
           end
   end
 
-  # describe "scopes" do
+  describe "scopes" do
 
-  #   context "count followers" do
-  #       let!(:user1) { FactoryBot.create(:user)}
-  #       let!(:user1) { FactoryBot.create(:user)}
-  #       let!(:follower1) { FactoryBot.create(:user)}
-  #       let!(:follower2) { FactoryBot.create(:user)}
+    it "returns the count of followers for a user'" do
+      user = create(:user)
+      create_list(:user, 3).each do |follower|
+        create(:follow, follower: follower, followee: user)
+      end
+      create(:user)
+      followers_count = User.followers_count_by_user(user.id)
+      expect(followers_count).to eq(3)
+    end
+    
+    it "returns the count of users being followees by a user'" do 
+      user = create(:user)
+      create_list(:user, 3).each do |followed_user|
+        create(:follow, follower: user, followee: followed_user)
+      end
+      create(:user)
+      following_count = User.following_count_by_user(user.id)
+      expect(following_count).to eq(3)
 
-  #     before do
-  #       user1.followers << follower1
-  #       user1.followers << follower2
-  #       user2.followers << follower1
-  #     end
-  #    it "followers_count_by_user" do
-  #       expect(User.followers_count_by_user(user1.id)).to eq(2)
-  #       expect(User.followers_count_by_user(user2.id)).to eq(1)
-  #    end
-  #   end
-
+    end
    
-
-  # end
+  end
 
 
     # it "has many tweets" do

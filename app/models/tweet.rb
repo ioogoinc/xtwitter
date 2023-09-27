@@ -36,8 +36,6 @@ class Tweet < ApplicationRecord
           user_id: user,
           retweet_id: tweet_to_retweet,    
         )
-    
-        retweet.save!
         retweet
     end
 

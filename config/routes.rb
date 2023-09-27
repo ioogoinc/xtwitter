@@ -8,7 +8,29 @@ Rails.application.routes.draw do
   resources :tweets, only: [:new, :create]
    # UPDATE Tweets
   resources :tweets, only: [:edit, :update]
- 
-end
+
+  #LIKE A TWEET
+  resources :tweets do
+    member do
+      post 'like'
+    end
+  end
+
+  # UNLIKE A TWEET
+  resources :tweets do
+    member do
+      delete 'unlike'
+    end
+  end
+
+  # RETWEET A TWEET
+  resources :tweets do
+    member do
+      post 'retweet'
+    end
+  end
+
 
 end
+
+

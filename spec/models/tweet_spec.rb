@@ -20,7 +20,7 @@ RSpec.describe Tweet, type: :model do
     
     describe "scopes" do 
 
-        it "tweets_by_user" do
+        it "returns the tweets by a user" do
             user  = create(:user)
             tweet1 = create(:tweet, user:user)
             tweet2 = create(:tweet, user:user)
@@ -30,7 +30,7 @@ RSpec.describe Tweet, type: :model do
             expect(tweets).to include(tweet1, tweet1)
         end
 
-        it "tweets_and_replies_by_user" do
+        it "returns the tweets and replies by a user" do
             user  = create(:user)
             tweet1 = create(:tweet, user:user)
             tweet2 = create(:tweet, user:user)
@@ -67,7 +67,10 @@ RSpec.describe Tweet, type: :model do
             expect(bookmarked_tweets_found).to match_array(bookmarked_tweets)
     
         end 
+        
+    end
 
+    describe "methods" do
         it "encapsulates the create retweet logic" do
             user = create(:user)
             retweets_new = create(:tweet)
@@ -95,6 +98,5 @@ RSpec.describe Tweet, type: :model do
 
             expect(hashtags.count).to eq(2)
         end
-        
     end
 end

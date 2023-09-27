@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:followers) }
     it { should have_many(:likes) }
     it { should have_many(:bookmarks) }
+    it { should have_many(:replies) }
   end
 
   context "validations" do
@@ -40,7 +41,7 @@ RSpec.describe User, type: :model do
       followers_count = User.followers_count_by_user(user.id)
       expect(followers_count).to eq(3)
     end
-    
+
     it "returns the count of users being followees by a user'" do 
       user = create(:user)
       create_list(:user, 3).each do |followed_user|
@@ -54,13 +55,4 @@ RSpec.describe User, type: :model do
    
   end
 
-
-    # it "has many tweets" do
-    #   user   = FactoryBot.create(:user)
-    #   tweet1 = FactoryBot.create(:tweet, user:user)
-    #   tweet2 = FactoryBot.create(:tweet, user:user)
-    #   expect(user.tweets).to include(tweet1, tweet2)
-    # end 
-
-  
 end

@@ -9,51 +9,24 @@ Rails.application.routes.draw do
    # UPDATE Tweets
   resources :tweets, only: [:edit, :update]
 
-  #LIKE A TWEET
   resources :tweets do
     member do
-      post 'like'
+      post 'like', to: 'tweets#like'
+      delete 'unlike', to: 'tweets#unlike'
+      post 'retweet', to: 'tweets#retweet'
+      post 'quote', to: 'tweets#quote'
+      get 'reply', to: 'tweets#reply'
+      post 'bookmark', to: 'tweets#bookmark'
+      get 'stats', to: 'tweets#stats'
     end
   end
 
-  # UNLIKE A TWEET
-  resources :tweets do
-    member do
-      delete 'unlike'
+  resources :users do
+    member do 
+      get 'tweets', to: 'user#show'
     end
   end
 
-  # RETWEET A TWEET
-  resources :tweets do
-    member do
-      post 'retweet'
-    end
-  end
-
-  # QUOTE A TWEET
-  resources :tweets do
-    member do
-      post 'quote'
-    end
-  end
-
-  # REPLY A TWEET
-
-  resources :tweets do
-    member do
-      get 'reply'
-    end
-  end
-
-  # BOOKMARK A TWEET
-
-  resources :tweets do
-    member do
-      post 'bookmark'
-    end
-  end
-
-  
 
 end
 

@@ -139,8 +139,8 @@ class TweetsController < ApplicationController
     end
 
     def tweet_params
-        params.require(:tweet).permit(:body, :user_id, :retweet_id, :quote_id, :parent_tweet_id)
-      end
+        params.permit(:body, :user_id)
+    end
  
     
 end

@@ -1,30 +1,14 @@
 {
-    "type": "object",
-    "required": ["tweet"],
-    "properties": {
-      "tweet" : {
-        "type" : "object",
-        "required" : [
-          "id",
-          "body",
-          "user_id",
-          "retweet_id",
-          "quote_id",
-          "parent_tweet_id",
-          "created_at",
-          "updated_at"
-        ],
-        "properties" : {
-          "id" : { "type" : "integer" },
-          "body" : { "type" : "string" },
-          "user_id" : { "type" : "integer" },
-          "retweet_id" : { "type" : "integer" },
-          "quote_id" : { "type" : "integer" },
-          "parent_tweet_id" : { "type" : "integer" },
-          "created_at" : { "type" : "string", "format": "date-time" },
-          "updated_at" : { "type" : "string", "format": "date-time" }
-        }
-      }
-    }
-  }
+  "type":"object",
+  "properties": {
+    "body": { "type": "string"},
+    "user_id": { "type": "integer"},
+    "retweet_id": { "type": "integer"},
+    "quote_id": { "type": "integer"},
+    "parent_tweet_id": { "type": "integer"},
+    "created_at": { "type": "string"},
+    "updated_at": { "type": "string"}
+  },
   
+  "required": ["user_id", "body"]
+}

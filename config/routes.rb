@@ -21,11 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
-    member do 
-      get 'tweets', to: 'user#show'
-    end
-  end
+  # resources :users do
+  #   member do 
+  #     get 'tweets', to: 'user#show'
+  #   end
+  # end
 
 
 end

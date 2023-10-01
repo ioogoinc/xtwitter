@@ -1,11 +1,15 @@
 class Tweet < ApplicationRecord
     belongs_to :user
+    belongs_to :parent_tweet,  class_name: 'Tweet', optional: true
     has_many :retweets, class_name: 'Tweet', foreign_key: :retweet_id
     has_many :quotes, class_name: 'Tweet', foreign_key: :quote_id
-    has_many :replies
-    has_many :hashtags
+    has_many :replies, class_name: 'Tweet', foreign_key: :parent_tweet_id
+    has_many :hashtag_tweets
+    has_many :hashtags, through: :hashtag_tweets, inverse_of: :tweets
     has_many :bookmarks
     has_many :likes
+   
+
 
     validates_associated :user
     validates_associated :retweets
@@ -19,84 +23,54 @@ class Tweet < ApplicationRecord
         retweet_id.nil?
     end
 
-    scope :tweets_by_user, ->(user_id) { where(user_id: user_id) }
-
-    scope :tweets_and_replies_by_user, ->(user_id) do
-        where(user_id: user_id).includes(:replies)
+    scope :tweets_by_user, ->(user_id) { where(user_id: user_id, parent_tweet_id: nil) }
+    scope :tweets_and_replies_by_user, ->(user_id) { where(user_id: user_id)}
+    scope :retweets_count, ->  (user_id) { where(user_id: user_id).where.not(retweet_id: nil).count }
+    scope :quotes_count, ->  (user_id) { where(user_id: user_id).where.not(quote_id: nil).count }
+    scope :bookmarks_tweet_by_user, ->  (user_id) do
+        joins(:bookmarks).where(bookmarks: {user_id: user_id})
     end
 
-    def self.create_retweet(user_id) 
-
-        orig_tweet = Tweet.find_by(retweet_id:nil, user_id: user_id )
-
-        if orig_tweet.nil?
-            return nil
-        end
-
-        retweet= Tweet.new(user_id: user_id, retweet_id: orig_tweet.id)
-
-        if retweet.save
-            return retweet
-        else
-            return nil
-        end
+    def self.create_retweet(user, tweet_to_retweet) 
+        retweet = Tweet.new(
+          body: nil,
+          user_id: user,
+          retweet_id: tweet_to_retweet,    
+        )
+        retweet
     end
 
-    def self.create_quote_retweet(user_id, body) 
-
-        orig_tweet = Tweet.find_by(retweet_id:nil, user_id: user_id )
-
-        if orig_tweet.nil?
-            return nil
-        end
-
-        retweet_body= Tweet.new(user_id: user_id, retweet_id: orig_tweet.id, body:body)
-
-        if retweet_body.save
-            return retweet_body
-        else
-            return nil
-        end
-    end
-
-
-    def like_tweet(user_id)
-        orig_likes = Like.find_by(user_id: user_id )
-
-        if orig_likes
-            return false
-        end
-
-        likes_tweets = Like.new(user_id: user_id, retweet_id: user_id)
+    def self.create_quote(user, new_body)
+        quote = Tweet.new(
+          body: new_body,
+          user_id: user,
+        )
         
-        if likes_tweets.save
-            return true
-        else
-            return false
-        end
-
+        quote.save!
+        quote.update(
+          quote_id: quote.id
+          )
+        quote
     end
 
-    def self.create_hashtag(tweet)
-        tweet_body = tweet.body
-
-        delete_hashtag = tweet_body.scan(/#\w+/).map {|hashtag_text| hashtag_text[1..-1] }
-        
-        
-        delete_hashtag.each do |hash_text|
-
-        hashtag = Hashtag.find_or_create_by(name: hash_text)
-
-        hashtag_new = Hashtag.new(name:hashtag)
-
-        if hashtag_new.nil?
-            return nil
-        else
-            return hashtag_new
-        end
-     
-        end
+    def self.create_like(user, tweet)
+      like = Like.new(
+        tweet_id: tweet,
+        user_id: user
+      )
+  
+      like.save!
+      like
+    end
+  
+    def self.create_hashtags(tweet)
+      hashtags = tweet.body.scan(/#\w+/)
+      hashtags.each do |hashtag_words| 
+        hashtag = Hashtag.find_or_create_by(name: hashtag_words)
+        tweet.hashtags << hashtag unless tweet.hashtags.include?(hashtag)
+      end
     end
 
+    
 
 end

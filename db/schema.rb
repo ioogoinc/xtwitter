@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_131806) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_210555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_131806) do
     t.integer "follower_id"
     t.integer "followee_id"
     t.index ["follower_id", "followee_id"], name: "index_follows_on_follower_id_and_followee_id", unique: true, comment: "Unique index to make sure that the user can not\n    follow the same user more than one time"
+  end
+
+  create_table "hashtag_tweets", force: :cascade do |t|
+    t.bigint "hashtag_id", null: false
+    t.bigint "tweet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hashtag_id"], name: "index_hashtag_tweets_on_hashtag_id"
+    t.index ["tweet_id"], name: "index_hashtag_tweets_on_tweet_id"
   end
 
   create_table "hashtags", force: :cascade do |t|
@@ -68,6 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_131806) do
     t.datetime "updated_at", null: false
     t.bigint "retweet_id"
     t.bigint "quote_id"
+    t.integer "parent_tweet_id"
     t.index ["quote_id"], name: "index_tweets_on_quote_id"
     t.index ["retweet_id"], name: "index_tweets_on_retweet_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
@@ -79,11 +89,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_131806) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password", limit: 12, null: false
+    t.string "password", null: false
   end
 
   add_foreign_key "bookmarks", "tweets"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "hashtag_tweets", "hashtags"
+  add_foreign_key "hashtag_tweets", "tweets"
   add_foreign_key "likes", "tweets"
   add_foreign_key "likes", "users"
   add_foreign_key "replies", "tweets"

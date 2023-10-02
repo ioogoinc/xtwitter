@@ -10,6 +10,19 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class= "alert-diaglog">
+      <%= yield :notices %>
+    </div>
+
+    <div class = "content">
+      <%= yield :body%>
+    </div>
+
+
+    <div class= "footer">
+      <%= yield :footer %>
+    </div>
+
+    
   </body>
 </html>

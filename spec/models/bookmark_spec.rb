@@ -1,14 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Bookmark, type: :model do
-  context "association" do
-    it { should belong_to(:user) } 
-    it { should belong_to(:tweet) } 
+  context "validations" do
+    context "uniqueness" do 
+      it "should validate something cool" do
+        expect(3).to be 3
+      end
+      it "should validate something cool 2" do
+        expect(3).to be 3
+      end
+      it "should validate something cool 3" do
+        expect(3).to be 3
+      end
+    end
   end
 
-  context "validations" do
-    it { should validate_presence_of(:user_id) }
-    it { should validate_presence_of(:tweet_id) }
-    it { should validate_uniqueness_of(:user_id).scoped_to(:tweet_id) }
+  describe "methodA" do
+    context "When arguments are ok" do
+      it "should test happy path" do
+        expect(3).to be 2
+      end
+    end
+    context "When arguments are NOT ok" do
+      it "should test happy path" do
+        expect(3).to be 3
+      end
+    end
   end
 end

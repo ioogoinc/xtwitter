@@ -1,0 +1,14 @@
+{
+  "type":"object",
+  "properties": {
+    "body": { "type": "string"},
+    "user_id": { "type": "integer"},
+    "retweet_id": { "type": "integer"},
+    "quote_id": { "type": "integer"},
+    "parent_tweet_id": { "type": "integer"},
+    "created_at": { "type": "string"},
+    "updated_at": { "type": "string"}
+  },
+  
+  "required": ["user_id", "body"]
+}

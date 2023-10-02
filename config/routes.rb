@@ -4,29 +4,26 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  # CREATE Tweets
-  resources :tweets, only: [:new, :create]
-   # UPDATE Tweets
-  resources :tweets, only: [:edit, :update]
 
-  resources :tweets do
-    member do
-      post 'like', to: 'tweets#like'
-      delete 'unlike', to: 'tweets#unlike'
-      post 'retweet', to: 'tweets#retweet'
-      post 'quote', to: 'tweets#quote'
-      get 'reply', to: 'tweets#reply'
-      post 'bookmark', to: 'tweets#bookmark'
-      get 'stats', to: 'tweets#stats'
-    end
+  namespace :api do 
+      resources :tweets do
+        member do
+          get 'new', to: 'tweets#new'
+          post 'create', to: 'tweets#create'
+          get 'edit', to: 'tweets#edit'
+          patch 'update', to: 'tweets#edit'
+          post 'like', to: 'tweets#like'
+          delete 'unlike', to: 'tweets#unlike'
+          post 'retweet', to: 'tweets#retweet'
+          post 'quote', to: 'tweets#quote'
+          get 'reply', to: 'tweets#reply'
+          post 'bookmark', to: 'tweets#bookmark'
+          get 'stats', to: 'tweets#stats'
+        end
+      end
   end
-
-  # resources :users do
-  #   member do 
-  #     get 'tweets', to: 'user#show'
-  #   end
-  # end
-
+  
+ 
 
 end
 

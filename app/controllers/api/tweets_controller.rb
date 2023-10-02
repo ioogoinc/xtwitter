@@ -1,4 +1,5 @@
-class TweetsController < ApplicationController
+class Api::TweetsController < ApplicationController
+
     before_action :set_tweet, only: %i[ show edit update destroy ]
     before_action :set_default_format 
     # include TweetsConcerns
@@ -65,5 +66,4 @@ class TweetsController < ApplicationController
     def set_default_format 
         request.format = :json unless params[:format]
     end
-    
 end

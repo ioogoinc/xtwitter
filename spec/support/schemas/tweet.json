@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "array",
+  "type": ["array", "object"],
   "properties": {
     "id": {
       "type": "integer"
@@ -12,21 +12,18 @@
       "type": "integer"
     },
     "retweet_id": {
-      "type": "integer"
+      "type": ["null", "integer"]
     },
     "quote_id": {
-      "type": "integer"
+      "type": ["null", "integer"]
     },
     "parent_tweet_id": {
-      "type": "integer"
+      "type": ["null", "integer"]
     },
     "created_at": {
       "type": "string"
     },
     "updated_at": {
-      "type": "string"
-    },
-    "url": {
       "type": "string"
     }
   },
@@ -38,7 +35,6 @@
     "quote_id",
     "parent_tweet_id",
     "created_at",
-    "updated_at",
-    "url"
+    "updated_at"
   ]
 }

@@ -1,4 +1,5 @@
-class Api::TweetsController < ApplicationController
+class Api::TweetsController < ApiController
+    # before_action :authenticate_user!
     before_action :set_tweet, only: %i[ show edit update destroy ]
     before_action :set_default_format
    
@@ -9,8 +10,8 @@ class Api::TweetsController < ApplicationController
 
 
     def show
-        @tweets = Tweet.find(params[:id])
-        render 'show', formats: :json
+        # @tweets = Tweet.find(params[:id])
+        # render 'show', formats: :json
     end
 
 
@@ -43,8 +44,6 @@ class Api::TweetsController < ApplicationController
 
     def update
         if @tweet.update(tweet_params)
-
-
             format.json { render :show, status: :ok, location: @tweet }
           else
             format.json { render json: @tweet.errors, status: :unprocessable_entity }
@@ -52,6 +51,7 @@ class Api::TweetsController < ApplicationController
     end
 
 
+    
 
 
 

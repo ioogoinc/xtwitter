@@ -5,6 +5,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "users#index"
+ devise_for :users
+  namespace :api do
+    resources :authentication do
+      member do
+       post 'log_in', to: 'auth#create'
+      end 
+    end  
+  end
+
 
 
   namespace :api do 

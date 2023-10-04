@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_162101) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_230115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_162101) do
     t.datetime "updated_at", null: false
     t.bigint "retweet_id"
     t.bigint "quote_id"
+    t.integer "parent_tweet"
     t.integer "parent_tweet_id"
     t.index ["quote_id"], name: "index_tweets_on_quote_id"
     t.index ["retweet_id"], name: "index_tweets_on_retweet_id"
@@ -89,7 +90,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_162101) do
     t.string "email", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"

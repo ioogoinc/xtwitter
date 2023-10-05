@@ -1,12 +1,13 @@
-class UsersController < ApplicationController
+class Api::UsersController < Api::BaseController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :set_default_format
-
-  include 
 
   # GET /users or /users.json
   def index
     @users = User.all
+    a = 0
+    other_arg = 1
+    debugger
+    c = o/a
   end
 
   # GET /users/1 or /users/1.json

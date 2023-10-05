@@ -1,4 +1,4 @@
-class TweetsController < ApplicationController
+class Api::TweetsController < Api::BaseController
   before_action :set_tweet, only: %i[ show edit update destroy ]
 
   # GET /tweets or /tweets.json

@@ -12,8 +12,18 @@ Rails.application.routes.draw do
        post 'log_in', to: 'auth#create'
       end 
     end  
+    resources :registration do
+      member do
+       post 'create', to: 'registration#create'
+      end 
+    end 
+    resources :sessions do
+      member do
+       post 'login', to: 'sessions#create'
+       delete 'logout', to: 'sessions#destroy'
+      end 
+    end 
   end
-
 
 
   namespace :api do 

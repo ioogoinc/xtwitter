@@ -77,7 +77,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_230115) do
     t.datetime "updated_at", null: false
     t.bigint "retweet_id"
     t.bigint "quote_id"
-    t.integer "parent_tweet"
     t.integer "parent_tweet_id"
     t.index ["quote_id"], name: "index_tweets_on_quote_id"
     t.index ["retweet_id"], name: "index_tweets_on_retweet_id"

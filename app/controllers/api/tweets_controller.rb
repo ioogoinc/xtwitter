@@ -1,10 +1,9 @@
 class Api::TweetsController < ApiController
-    # before_action :authenticate_user!
-    attr_reader :current_user
     before_action :set_tweet, only: %i[ show edit update destroy ]
     before_action :set_default_format
-include TweetsConcerns
-   
+    include TweetsConcerns
+    before_action :authenticate_user!
+    
     def index
         @tweets = Tweet.all
         render 'index', formats: :json
@@ -110,9 +109,6 @@ include TweetsConcerns
             render json: { error: "Already exist in The Bookmark"}
         end
     end
-
-
-
 
 
       private

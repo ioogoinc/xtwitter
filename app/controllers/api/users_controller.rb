@@ -1,44 +1,31 @@
 class Api::UsersController < Api::BaseController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show update ]
 
-  # GET /users or /users.json
-  def index
-    @users = User.all
-    a = 0
-    other_arg = 1
-    debugger
-    c = o/a
-  end
 
   # GET /users/1 or /users/1.json
   def show
+    @followers_count = @user.followers.count
+    @followings_count = @user.followings.count
+    @user_tweets = @user.tweets
+    .includes(tweet: [:author, :likes, :qoutes, :retweets, :parent_tweet])
+    @tweets_and_replies = @user.tweets_and_replies
+    .includes(tweet: [:author, :likes, :qoutes, :retweets, :parent_tweet])
   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users or /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to users_url notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render :show, status: :unprocessable_entity }
-      end
-    end
-  end
-
+ 
   # PATCH/PUT /users/1 or /users/1.json
+  # {
+  #   user: {
+  #     name: "sasasas",
+  #     lastname: "sasasas",
+  #     username: "sasasas",
+  #     email: "sasasas",
+  #     passwo: "sasasas"
+  #   }
+  # }
+
+  # GET /users/:id => UsersController#show
+
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -51,29 +38,14 @@ class Api::UsersController < Api::BaseController
     end
   end
 
-  # DELETE /users/1 or /users/1.json
-  def destroy
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      Rails.logger.debug "params.class => #{params.class}"
       @user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :lastname, :username, :email, :password)
-    end
-
-    def set_default_format
-      request.format = :json unless params[:format]
+      params.require(:user).permit(:name, :lastname, :username, :email)
     end
 end

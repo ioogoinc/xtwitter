@@ -4,6 +4,8 @@
 
 <br>
 
-<div>
-  <%= link_to "Back to tweets", tweets_path %>
-</div>
+<% content_for :footer do %>
+  <div>
+    <%= link_to "Back to tweets", tweets_path %>
+  </div>
+<% end %>

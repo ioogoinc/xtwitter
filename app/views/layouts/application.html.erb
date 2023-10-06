@@ -15,11 +15,12 @@
     </div>
 
     <div class = "content">
-      <%= yield :body%>
+      <%= yield %>
     </div>
 
 
     <div class= "footer">
+      <%= render "shared/footer"%>
       <%= yield :footer %>
     </div>
 

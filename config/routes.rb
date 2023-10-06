@@ -1,4 +1,7 @@
+
 Rails.application.routes.draw do
+  devise_for :users
+  resources :tweets
   namespace :api  do
     resources :tweets, only: [:show, :create, :detele, :update]
     resources :users, only: [:show] do

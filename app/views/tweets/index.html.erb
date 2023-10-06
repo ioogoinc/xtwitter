@@ -1,4 +1,6 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :notices do %>
+  <p style="color: green">THIS SHOULD BE A NOTICE</p>
+<% end %>
 
 <h1>Tweets</h1>
 
@@ -11,4 +13,6 @@
   <% end %>
 </div>
 
-<%= link_to "New tweet", new_tweet_path %>
+<% content_for :footer do %>
+  <%= link_to "New tweet", new_tweet_url %>
+<% end %>
